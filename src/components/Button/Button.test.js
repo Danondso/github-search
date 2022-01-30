@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 describe('Button Test Suite', () => {
-  test('renders learn react link and icon', () => {
+  test('renders button with link and icon', () => {
     render(
       <Button onClick={onClickMock}>
         <FaBeer title="beer icon" />
