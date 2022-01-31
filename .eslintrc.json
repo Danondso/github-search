@@ -20,6 +20,7 @@
         "testing-library"
     ],
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "linebreak-style": 0 // to support line breaks between windows and mac machines without the linter screaming at you.
     }
 }
