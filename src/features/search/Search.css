@@ -1,0 +1,37 @@
+#search-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#paging-container {
+    padding: 1rem;
+}
+
+#total-results-container {
+    width: 100%;
+    justify-content: center;
+}
+
+#page-number-container {
+    padding: 0.5rem;
+}
+
+#paging-button-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#result-layout-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* lifted from https://css-tricks.com/centering-in-css/ */
+.gentle-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1ch;
+}

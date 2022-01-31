@@ -1,3 +1,10 @@
 .button {
-    border-radius: 2px;
+    border-radius: 100px;
+    background-color: powderblue;
+    border-width: 0rem;
+    padding: 1rem;
+}
+
+.button:disabled {
+    background-color: gray;
 }
