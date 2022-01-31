@@ -1,7 +1,5 @@
 import React from 'react';
-import { FaBeer } from 'react-icons/fa';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Avatar from './Avatar';
 
 const onClickMock = jest.fn();

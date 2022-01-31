@@ -44,6 +44,7 @@ function Search() {
       setSearchResults(keyedResults);
       setIsLoading(false);
     }).catch((error) => {
+      // eslint-disable-next-line no-console
       console.log(error);
     });
   }, [searchTerm, pageNumber]);
