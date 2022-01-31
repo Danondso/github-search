@@ -12,3 +12,7 @@
     color: #000;
     text-align: center;
 }
+
+input:focus{
+    outline: none;
+}

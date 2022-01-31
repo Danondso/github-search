@@ -4,6 +4,7 @@ import {
   debounce, each, isEmpty,
 } from 'lodash';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+import { BallTriangle } from 'react-loader-spinner';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import {
@@ -20,6 +21,8 @@ function Search() {
   const [pageNumber, setPageNumber] = useState(1); // github's API defaults to 1
   const [searchResults, setSearchResults] = useState({});
   const [totalResults, setTotalResults] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -29,6 +32,7 @@ function Search() {
       setSearchResults({});
       return;
     }
+    setIsLoading(true);
 
     axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`).then((results) => {
       const { data } = results;
@@ -38,6 +42,7 @@ function Search() {
       const keyedResults = {};
       each(data.items, (item) => { keyedResults[item.login] = item; });
       setSearchResults(keyedResults);
+      setIsLoading(false);
     }).catch((error) => {
       console.log(error);
     });
@@ -65,6 +70,54 @@ function Search() {
   </div>
   ));
 
+  const renderLoader = () => (
+    <div className="gentle-flex">
+      <BallTriangle
+        height="40"
+        width="40"
+        color="powderblue"
+        ariaLabel="loading-indicator"
+      />
+    </div>
+  );
+
+  const renderSearchResults = () => (
+    <div id="result-layout-container">
+      <div className="gentle-flex">
+        {searchResults && (Object.values(searchResults).map((result) => (
+          <Card>
+            <a target="_blank" rel="noreferrer" href={result.html_url}>
+              <CardHeader headerText={result.login} />
+              <CardContent>
+                <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
+              </CardContent>
+            </a>
+          </Card>
+
+        )))}
+      </div>
+    </div>
+  );
+
+  const renderPaging = () => (
+    <div id="paging-container">
+      <div id="paging-button-wrapper">
+        <Button
+          onClick={handlePageBackward}
+          disabled={pageNumber === 1 || isEmpty(searchResults)}
+        >
+          <BsArrowLeft size={18} />
+        </Button>
+        <Button
+          onClick={handlePageForward}
+          disabled={pageNumber === totalPages || isEmpty(searchResults)}
+        >
+          <BsArrowRight size={18} />
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <div id="search-container">
       <h2>Search Github Users</h2>
@@ -76,43 +129,14 @@ function Search() {
         />
       </div>
 
-      <div id="paging-container">
-        <div id="paging-button-wrapper">
-          <Button
-            onClick={handlePageBackward}
-            disabled={pageNumber === 1 || isEmpty(searchResults)}
-          >
-            <BsArrowLeft size={18} />
-          </Button>
-          <Button
-            onClick={handlePageForward}
-            disabled={pageNumber === totalPages || isEmpty(searchResults)}
-          >
-            <BsArrowRight size={18} />
-          </Button>
-        </div>
-      </div>
-
+      {renderPaging()}
       {renderTotalResults()}
-      <div id="result-layout-container">
-        <div className="gentle-flex">
-          {searchResults && (Object.values(searchResults).map((result) => (
-            <Card>
-              <CardHeader headerText={result.login} />
-              <CardContent>
-                <a target="_blank" rel="noreferrer" href={result.avatar_url}>
-                  <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
-                </a>
-              </CardContent>
-            </Card>
-          )))}
-        </div>
-      </div>
+      {isLoading && renderLoader()}
+      {renderSearchResults()}
 
       {/* As a user,
-    ● I can navigate through the next and previous pages of the paginated results
     ● I see notable information for each search result, such as the description, star/follower
-    count, profile pictures, etc. */}
+    count */}
 
     </div>
   );

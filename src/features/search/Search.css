@@ -35,3 +35,7 @@
     justify-content: center;
     gap: 1ch;
 }
+
+a:link, a:hover {
+    text-decoration: none;
+}
