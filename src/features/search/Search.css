@@ -8,7 +8,7 @@
     padding: 1rem;
 }
 
-#total-results-container {
+#total-results-container, #error-message-container {
     width: 100%;
     justify-content: center;
 }
@@ -34,6 +34,14 @@
     align-items: center;
     justify-content: center;
     gap: 1ch;
+}
+
+.loader-layout-container {
+    padding: 1rem;
+}
+
+.result-layout-container {
+    width: 30%;
 }
 
 a:link, a:hover {

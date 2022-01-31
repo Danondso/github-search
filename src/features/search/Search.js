@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  debounce, each, isEmpty,
+  debounce, each,
 } from 'lodash';
-import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import { BallTriangle } from 'react-loader-spinner';
-import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import {
   Card,
@@ -14,14 +12,15 @@ import {
 } from '../../components/Card/Card';
 import './Search.css';
 import Avatar from '../../components/Avatar/Avatar';
+import Pagination from '../../components/Pagination/Pagination';
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1); // github's API defaults to 1
   const [searchResults, setSearchResults] = useState({});
   const [totalResults, setTotalResults] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -30,22 +29,26 @@ function Search() {
       setTotalPages(0);
       setPageNumber(1);
       setSearchResults({});
+      setErrorMessage('');
       return;
     }
+
     setIsLoading(true);
 
     axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`).then((results) => {
       const { data } = results;
       setTotalResults(data.total_count);
       setTotalPages(Math.ceil(data.total_count / 30));
+      setErrorMessage('');
 
       const keyedResults = {};
       each(data.items, (item) => { keyedResults[item.login] = item; });
       setSearchResults(keyedResults);
       setIsLoading(false);
     }).catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
+      setIsLoading(false);
+      setSearchResults({});
+      setErrorMessage(error.message || 'An error occurred.');
     });
   }, [searchTerm, pageNumber]);
 
@@ -59,8 +62,13 @@ function Search() {
   // }, [searchResults]);
 
   const handleOnSearch = (event) => setSearchTerm(event.target.value);
-  const handlePageForward = () => setPageNumber(pageNumber + 1);
-  const handlePageBackward = () => setPageNumber(pageNumber - 1);
+  const handlePaginate = (event) => {
+    if (event.selected === 0) {
+      setPageNumber(1);
+    } else {
+      setPageNumber(event.selected);
+    }
+  };
 
   const renderTotalResults = () => (totalResults > 0 && (
   <div id="total-results-container">
@@ -71,8 +79,14 @@ function Search() {
   </div>
   ));
 
+  const renderErrorMessage = () => (errorMessage && (
+    <div id="error-message-container">
+      {errorMessage}
+    </div>
+  ));
+
   const renderLoader = () => (
-    <div className="gentle-flex">
+    <div className="gentle-flex loader-layout-container">
       <BallTriangle
         height="40"
         width="40"
@@ -84,9 +98,9 @@ function Search() {
 
   const renderSearchResults = () => (
     <div id="result-layout-container">
-      <div className="gentle-flex">
+      <div className="gentle-flex result-layout-container">
         {searchResults && (Object.values(searchResults).map((result) => (
-          <Card>
+          <Card key={result.login}>
             <a target="_blank" rel="noreferrer" href={result.html_url}>
               <CardHeader headerText={result.login} />
               <CardContent>
@@ -103,18 +117,7 @@ function Search() {
   const renderPaging = () => (
     <div id="paging-container">
       <div id="paging-button-wrapper">
-        <Button
-          onClick={handlePageBackward}
-          disabled={pageNumber === 1 || isEmpty(searchResults)}
-        >
-          <BsArrowLeft size={18} />
-        </Button>
-        <Button
-          onClick={handlePageForward}
-          disabled={pageNumber === totalPages || isEmpty(searchResults)}
-        >
-          <BsArrowRight size={18} />
-        </Button>
+        <Pagination handlePaginate={handlePaginate} totalPages={totalPages} />
       </div>
     </div>
   );
@@ -132,6 +135,7 @@ function Search() {
 
       {renderPaging()}
       {renderTotalResults()}
+      {renderErrorMessage()}
       {isLoading && renderLoader()}
       {renderSearchResults()}
 
