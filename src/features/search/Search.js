@@ -35,7 +35,11 @@ function Search() {
 
     setIsLoading(true);
 
-    axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`).then((results) => {
+    axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`, {
+      headers: {
+        Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
+      },
+    }).then((results) => {
       const { data } = results;
       setTotalResults(data.total_count);
       setTotalPages(Math.ceil(data.total_count / 30));
@@ -52,14 +56,23 @@ function Search() {
     });
   }, [searchTerm, pageNumber]);
 
-  // make this happen on a button click
-  // useEffect(() => {
-  //   each(searchResults, (searchResultItem) => {
-  //     axios.get(`https://api.github.com/users/${searchResultItem.login}`).then((result) => {
-  //       console.log(result.data);
-  //     });
-  //   });
-  // }, [searchResults]);
+  // TODO rework state to update this data
+  useEffect(() => {
+    const results = {};
+    each(searchResults, (searchResultItem) => {
+      axios.get(`https://api.github.com/users/${searchResultItem.login}`, {
+        headers: {
+          Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
+        },
+      }).then((result) => {
+        results[searchResultItem.login] = {
+          ...searchResultItem,
+          ...result.data,
+        };
+      });
+      setSearchResults(results);
+    });
+  }, [searchResults]);
 
   const handleOnSearch = (event) => setSearchTerm(event.target.value);
   const handlePaginate = (event) => {
@@ -99,17 +112,21 @@ function Search() {
   const renderSearchResults = () => (
     <div id="result-layout-container">
       <div className="gentle-flex result-layout-container">
-        {searchResults && (Object.values(searchResults).map((result) => (
-          <Card key={result.login}>
-            <a target="_blank" rel="noreferrer" href={result.html_url}>
-              <CardHeader headerText={result.login} />
-              <CardContent>
-                <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
-              </CardContent>
-            </a>
-          </Card>
+        {searchResults && (Object.values(searchResults).map((result) => {
+          console.log(result);
+          return (
+            <Card key={result.login}>
+              <a target="_blank" rel="noreferrer" href={result.html_url}>
+                <CardHeader headerText={result.login} />
+                <CardContent>
+                  <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
+                  <div>{`Bio: ${result.bio}`}</div>
+                </CardContent>
+              </a>
+            </Card>
 
-        )))}
+          );
+        }))}
       </div>
     </div>
   );
