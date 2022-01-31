@@ -15,6 +15,6 @@ describe('Avatar Test Suite', () => {
       <Avatar imageSrc={testImageUrl} altText="Test Image" />,
     );
     const image = screen.getByAltText('Test Image');
-    expect(image).toBeInTheDocument();
+    expect(image).toMatchSnapshot();
   });
 });

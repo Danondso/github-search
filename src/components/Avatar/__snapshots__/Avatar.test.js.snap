@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar Test Suite renders avatar with all required props 1`] = `
+<img
+  alt="Test Image"
+  class="avatar-image"
+  src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.distractify.com%2Fbrand-img%2FEm7U9Ugzx%2F0x0%2Fscreen-shot-2020-06-18-at-74312-pm-1592527404184.png&f=1&nofb=1"
+/>
+`;

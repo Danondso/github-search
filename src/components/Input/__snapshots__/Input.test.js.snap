@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Test Suite Input is clickable 1`] = `
+<input
+  class="input"
+  placeholder="Test Input"
+/>
+`;

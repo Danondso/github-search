@@ -17,10 +17,8 @@ describe('Button Test Suite', () => {
         Test Button
       </Button>,
     );
-    const buttonText = screen.getByText(/test button/i);
-    const icon = screen.getByTitle('beer icon');
-    expect(buttonText).toBeInTheDocument();
-    expect(icon).toBeInTheDocument();
+    const button = screen.getByText(/test button/i);
+    expect(button).toMatchSnapshot();
   });
 
   test('button is clickable', () => {

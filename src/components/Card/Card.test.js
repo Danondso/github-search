@@ -10,7 +10,7 @@ describe('Card Test Suite', () => {
       </Card>,
     );
     const card = screen.getByText('I am text!');
-    expect(card).toBeInTheDocument();
+    expect(card).toMatchSnapshot();
   });
 
   test('renders CardHeader with headerText', () => {
@@ -20,7 +20,7 @@ describe('Card Test Suite', () => {
       </Card>,
     );
     const cardHeader = screen.getByText('Test');
-    expect(cardHeader).toBeInTheDocument();
+    expect(cardHeader).toMatchSnapshot();
   });
 
   test('renders CardContent with children', () => {
@@ -33,6 +33,6 @@ describe('Card Test Suite', () => {
       </Card>,
     );
     const cardContent = screen.getByText('I am card content!');
-    expect(cardContent).toBeInTheDocument();
+    expect(cardContent).toMatchSnapshot();
   });
 });

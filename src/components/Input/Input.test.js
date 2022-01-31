@@ -19,7 +19,7 @@ describe('Input Test Suite', () => {
       />,
     );
     const inputElement = screen.getByPlaceholderText(placeholderText);
-    expect(inputElement).toBeInTheDocument();
+    expect(inputElement).toMatchSnapshot();
   });
 
   test('onChangeMock is called when text is input', () => {

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card Test Suite renders CardContent with children 1`] = `
+<div>
+  I am card content!
+</div>
+`;
+
+exports[`Card Test Suite renders CardHeader with headerText 1`] = `
+<div
+  class="card-header"
+  style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"
+>
+  Test
+</div>
+`;
+
+exports[`Card Test Suite renders card with children 1`] = `
+<div
+  class="card-container"
+>
+  I am text!
+</div>
+`;

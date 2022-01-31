@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination Test Suite Renders with required props 1`] = `
+<a
+  aria-disabled="false"
+  aria-label="Next page"
+  class="page-link"
+  rel="next"
+  role="button"
+  tabindex="0"
+>
+  Next
+</a>
+`;
