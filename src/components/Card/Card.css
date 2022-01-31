@@ -1,0 +1,18 @@
+.card-container {
+    border-radius: 15px;
+    background-color: '#fff';
+    width: 100%;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0 0 15px 15px;
+}
+
+.card-header {
+    padding: 0.5rem;
+    border-radius: 15px 15px 0 0;
+    padding-bottom: 1rem;
+}
