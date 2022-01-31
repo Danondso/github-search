@@ -1,0 +1,26 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.page-item {
+    list-style-type: none;
+    border-width: 1px;
+    padding: 1rem;
+    font-size: medium;
+}
+
+.page-item.disabled {
+    color: #BFC0C0;
+}
+
+
+.page-link {
+    cursor: pointer;
+}
+
+.active {
+    color: #A06CD5;
+}
