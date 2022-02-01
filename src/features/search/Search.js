@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  debounce, each,
+  debounce, isEmpty,
 } from 'lodash';
 import { BallTriangle } from 'react-loader-spinner';
 import Input from '../../components/Input/Input';
@@ -14,12 +14,20 @@ import './Search.css';
 import Avatar from '../../components/Avatar/Avatar';
 import Pagination from '../../components/Pagination/Pagination';
 
+import UserDetails from './UserDetails/UserDetails';
+
+const authorizationHeader = {
+  headers: {
+    Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
+  },
+};
+
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1); // github's API defaults to 1
-  const [searchResults, setSearchResults] = useState({});
+  const [searchResults, setSearchResults] = useState([]);
   const [totalResults, setTotalResults] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,19 +43,20 @@ function Search() {
 
     setIsLoading(true);
 
-    axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`, {
-      headers: {
-        Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
-      },
-    }).then((results) => {
+    axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`, authorizationHeader).then((results) => {
       const { data } = results;
-      setTotalResults(data.total_count);
-      setTotalPages(Math.ceil(data.total_count / 30));
-      setErrorMessage('');
+      const { total_count, items } = data;
 
-      const keyedResults = {};
-      each(data.items, (item) => { keyedResults[item.login] = item; });
-      setSearchResults(keyedResults);
+      if (isEmpty(items)) {
+        setErrorMessage('No Results Returned');
+        setIsLoading(false);
+        return;
+      }
+
+      setTotalResults(total_count);
+      setTotalPages(Math.ceil(total_count / 30));
+      setErrorMessage('');
+      setSearchResults(items);
       setIsLoading(false);
     }).catch((error) => {
       setIsLoading(false);
@@ -55,24 +64,6 @@ function Search() {
       setErrorMessage(error.message || 'An error occurred.');
     });
   }, [searchTerm, pageNumber]);
-
-  // TODO rework state to update this data
-  useEffect(() => {
-    const results = {};
-    each(searchResults, (searchResultItem) => {
-      axios.get(`https://api.github.com/users/${searchResultItem.login}`, {
-        headers: {
-          Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
-        },
-      }).then((result) => {
-        results[searchResultItem.login] = {
-          ...searchResultItem,
-          ...result.data,
-        };
-      });
-      setSearchResults(results);
-    });
-  }, [searchResults]);
 
   const handleOnSearch = (event) => setSearchTerm(event.target.value);
   const handlePaginate = (event) => {
@@ -112,21 +103,19 @@ function Search() {
   const renderSearchResults = () => (
     <div id="result-layout-container">
       <div className="gentle-flex result-layout-container">
-        {searchResults && (Object.values(searchResults).map((result) => {
-          console.log(result);
-          return (
-            <Card key={result.login}>
-              <a target="_blank" rel="noreferrer" href={result.html_url}>
-                <CardHeader headerText={result.login} />
-                <CardContent>
-                  <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
-                  <div>{`Bio: ${result.bio}`}</div>
-                </CardContent>
-              </a>
-            </Card>
-
-          );
-        }))}
+        {searchResults.length > 0 && (searchResults.map((result) => (
+          <Card key={result.login}>
+            <a target="_blank" rel="noreferrer" href={result.html_url}>
+              <CardHeader headerText={result.login} />
+            </a>
+            <CardContent>
+              <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
+              <div className="user-details-wrapper">
+                <UserDetails userName={result.login} />
+              </div>
+            </CardContent>
+          </Card>
+        )))}
       </div>
     </div>
   );

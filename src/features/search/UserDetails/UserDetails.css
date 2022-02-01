@@ -1,0 +1,23 @@
+.user-details-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: #eee8aa;
+    border-radius: 15px;
+}
+
+.user-details-item {
+
+  font-size: smaller;
+  padding: 0.5rem;
+  color: #282c34;
+  text-overflow: ellipsis;
+}
+
+.user-details-row {
+    display: flex;
+    justify-content: center;
+}
+  

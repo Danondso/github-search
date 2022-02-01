@@ -6,8 +6,8 @@ import './Pagination.css';
 function Pagination({ handlePaginate, totalPages }) {
   return (
     <ReactPaginate
-      previousLabel="Previous"
-      nextLabel="Next"
+      previousLabel="<<<"
+      nextLabel=">>>"
       pageClassName="page-item"
       pageLinkClassName="page-link"
       previousClassName="page-item"

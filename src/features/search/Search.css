@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding-bottom: 2rem;
 }
 
 #paging-container {
@@ -11,6 +12,7 @@
 #total-results-container, #error-message-container {
     width: 100%;
     justify-content: center;
+    font-size: large;
 }
 
 #page-number-container {
@@ -44,6 +46,7 @@
     width: 30%;
 }
 
-a:link, a:hover {
-    text-decoration: none;
+.user-details-wrapper {
+    border-width: 1rem;
+    padding: 2rem;
 }
