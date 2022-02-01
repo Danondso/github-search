@@ -21,6 +21,7 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "linebreak-style": 0 // to support line breaks between windows and mac machines without the linter screaming at you.
+        "linebreak-style": 0, // to support line breaks between windows and mac machines without the linter screaming at you.
+        "camelcase": 0
     }
 }
