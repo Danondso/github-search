@@ -5,9 +5,8 @@ import getAuthorizationHeaders from '../../../utils/authorizationUtil/authorizat
 import './UserDetails.css';
 
 const authHeaders = getAuthorizationHeaders();
-const baseUrl = `${process.env.REACT_APP_GITHUB_API_BASE_URL}/users/`;
 
-function UserDetails({ userName }) {
+function UserDetails({ userUrl, reposUrl }) {
   const [userDetails, setUserDetails] = useState(undefined);
   const [userDetailsError, setUserDetailsError] = useState(undefined);
 
@@ -15,8 +14,8 @@ function UserDetails({ userName }) {
     // normally I'd put the other call within a function, but since we're leveraging the second call
     // immediately I've opted to keep it here since we enrich user details with it.
     try {
-      const { data } = await axios.get(`${baseUrl}${userName}`, authHeaders);
-      const userRepoResponse = await axios.get(`${baseUrl}${userName}/repos`, authHeaders);
+      const { data } = await axios.get(userUrl, authHeaders);
+      const userRepoResponse = await axios.get(reposUrl, authHeaders);
       setUserDetails({
         ...data,
         // short-circuit on reduce and set to zero if we can't reduce the data
@@ -25,7 +24,7 @@ function UserDetails({ userName }) {
     } catch (error) {
       setUserDetailsError(error.message);
     }
-  }, [userName]);
+  }, [userUrl, reposUrl]);
 
   const renderRow = (children) => (
     <div className="user-details-item user-details-row">
@@ -39,7 +38,6 @@ function UserDetails({ userName }) {
         <div className="user-details-item">
             {userDetails.bio && renderRow(`Bio: ${userDetails.bio}`)}
             {userDetails.company && renderRow(`Company: ${userDetails.company}`)}
-            {userDetails.blog && renderRow(`Blog: ${userDetails.blog}`)}
             {userDetails.followers && renderRow(`Followers: ${userDetails.followers}`)}
             {userDetails.public_repos && renderRow(`Public Repos: ${userDetails.public_repos}`)}
             {userDetails.star_count && renderRow(`Star Count: ${userDetails.public_repos}`)}
@@ -57,7 +55,8 @@ function UserDetails({ userName }) {
 }
 
 UserDetails.propTypes = {
-  userName: propTypes.string.isRequired,
+  userUrl: propTypes.string.isRequired,
+  reposUrl: propTypes.string.isRequired,
 };
 
 export default UserDetails;
