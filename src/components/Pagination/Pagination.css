@@ -1,26 +1,24 @@
 .pagination {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .page-item {
-    list-style-type: none;
-    border-width: 1px;
-    padding: 1rem;
-    font-size: medium;
+  list-style-type: none;
+  border-width: 1px;
+  padding: 1rem;
+  font-size: medium;
 }
 
 .page-item.disabled {
-    color: #BFC0C0;
+  color: #bfc0c0;
 }
 
-
 .page-link {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .active {
-    color: #A06CD5;
+  color: #a06cd5;
 }

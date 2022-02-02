@@ -1,11 +1,11 @@
 .avatar-container {
-    display: inline-block;
-    align-content: center;
+  display: inline-block;
+  align-content: center;
 }
 
 .avatar-image {
-   height: 80px;
-   width: 80px;
-   border-radius: 100px;
-   background-color: #282c34;
+  height: 80px;
+  width: 80px;
+  border-radius: 100px;
+  background-color: #282c34;
 }

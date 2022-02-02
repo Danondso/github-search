@@ -1,15 +1,12 @@
 .user-details-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-radius: 15px;
-    background-color: #eee8aa;
-    border-radius: 15px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: #eee8aa;
 }
 
 .user-details-item {
-
   font-size: smaller;
   padding: 0.5rem;
   color: #282c34;
@@ -17,7 +14,6 @@
 }
 
 .user-details-row {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-  

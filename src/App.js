@@ -4,7 +4,7 @@ import Search from './features/search/Search';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Search />
     </div>
   );

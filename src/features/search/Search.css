@@ -1,64 +1,65 @@
 #search-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 2rem;
 }
 
 #paging-container {
-    padding: 1rem;
+  padding: 1rem;
 }
 
-#total-results-container, #error-message-container {
-    width: 100%;
-    justify-content: center;
-    font-size: large;
+#total-results-container,
+#error-message-container {
+  width: 100%;
+  justify-content: center;
+  font-size: large;
 }
 
 #page-number-container {
-    padding: 0.5rem;
+  padding: 0.5rem;
 }
 
 #paging-button-wrapper {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 #search-results-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* lifted from https://css-tricks.com/centering-in-css/ */
 .gentle-flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1ch;
 }
 
 .loader-layout-container {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .result-layout-container {
-    width: 30%;
+  width: 30%;
 }
 
 .user-details-wrapper {
-    border-width: 1rem;
-    padding: 2rem;
+  border-width: 1rem;
+  padding: 2rem;
 }
 
 @media screen and (max-width: 600px) {
-    .result-layout-container {
-        width: 60%;
-    }
+  .result-layout-container {
+    width: 60%;
   }
+}
 
-  @media screen and (max-width: 820px) {
-    .result-layout-container {
-        width: 80%;
-    }
+@media screen and (max-width: 820px) {
+  .result-layout-container {
+    width: 80%;
   }
+}

@@ -1,25 +1,25 @@
 .card-container {
-    border-radius: 15px;
-    background-color: '#fff';
-    width: 100%;
+  border-radius: 15px;
+  background-color: "#fff";
+  width: 100%;
 }
 
 .card-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 0 0 15px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0 0 15px 15px;
 }
 
 .card-header {
-    padding: 0.5rem;
-    border-radius: 15px 15px 0 0;
-    padding-bottom: 1rem;
-    font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 15px 15px 0 0;
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 @media screen and (max-width: 600px) {
-    .card-header {
-        font-size: 0.75rem;
-    }
+  .card-header {
+    font-size: 0.75rem;
   }
+}
