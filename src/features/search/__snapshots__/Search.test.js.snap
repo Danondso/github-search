@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetails Test Suite Renders correctly 1`] = `
+<div>
+  <div
+    id="search-container"
+  >
+    <h2>
+      Search Github Users
+    </h2>
+    <div
+      id="input-container"
+    >
+      <input
+        class="input"
+        placeholder="Search For Users"
+      />
+    </div>
+    <div
+      id="paging-container"
+    >
+      <div
+        id="paging-button-wrapper"
+      />
+    </div>
+    
+    <div
+      id="result-layout-container"
+    >
+      <div
+        class="gentle-flex result-layout-container"
+      />
+    </div>
+  </div>
+</div>
+`;
