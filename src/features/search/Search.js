@@ -107,7 +107,7 @@ function Search() {
             <CardContent>
               <Avatar imageSrc={result.avatar_url} altText={`Avatar of ${result.login}`} />
               <div className="user-details-wrapper">
-                <UserDetails userName={result.login} />
+                <UserDetails userUrl={result.url} reposUrl={result.repos_url} />
               </div>
             </CardContent>
           </Card>
