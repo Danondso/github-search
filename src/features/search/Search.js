@@ -10,17 +10,13 @@ import {
   CardHeader,
   CardContent,
 } from '../../components/Card/Card';
-import './Search.css';
 import Avatar from '../../components/Avatar/Avatar';
 import Pagination from '../../components/Pagination/Pagination';
-
 import UserDetails from './UserDetails/UserDetails';
+import getAuthorizationHeaders from '../../utils/authorizationUtil/authorizationUtil';
+import './Search.css';
 
-const authorizationHeader = {
-  headers: {
-    Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
-  },
-};
+const authorizationHeaders = getAuthorizationHeaders();
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,7 +39,7 @@ function Search() {
 
     setIsLoading(true);
 
-    axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`, authorizationHeader).then((results) => {
+    axios.get(`${process.env.REACT_APP_GITHUB_API_BASE_URL}/search/users?q=${encodeURIComponent(searchTerm)}&page=${pageNumber}`, authorizationHeaders).then((results) => {
       const { data } = results;
       const { total_count, items } = data;
 

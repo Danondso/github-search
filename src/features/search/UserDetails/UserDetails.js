@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types';
+import getAuthorizationHeaders from '../../../utils/authorizationUtil/authorizationUtil';
 import './UserDetails.css';
 
-const authorizationHeader = {
-  headers: {
-    Authorization: `Basic ${btoa(`${process.env.REACT_APP_GITHUB_CLIENT_ID}:${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`, 'base64')}`,
-  },
-};
-
-const baseUrl = 'https://api.github.com/users/';
+const authHeaders = getAuthorizationHeaders();
+const baseUrl = `${process.env.REACT_APP_GITHUB_API_BASE_URL}/users/`;
 
 function UserDetails({ userName }) {
   const [userDetails, setUserDetails] = useState(undefined);
@@ -19,8 +15,8 @@ function UserDetails({ userName }) {
     // normally I'd put the other call within a function, but since we're leveraging the second call
     // immediately I've opted to keep it here since we enrich user details with it.
     try {
-      const { data } = await axios.get(`${baseUrl}${userName}`, authorizationHeader);
-      const userRepoResponse = await axios.get(`${baseUrl}${userName}/repos`, authorizationHeader);
+      const { data } = await axios.get(`${baseUrl}${userName}`, authHeaders);
+      const userRepoResponse = await axios.get(`${baseUrl}${userName}/repos`, authHeaders);
       setUserDetails({
         ...data,
         // short-circuit on reduce and set to zero if we can't reduce the data
