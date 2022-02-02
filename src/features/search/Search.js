@@ -62,13 +62,8 @@ function Search() {
   }, [searchTerm, pageNumber]);
 
   const handleOnSearch = (event) => setSearchTerm(event.target.value);
-  const handlePaginate = (event) => {
-    if (event.selected === 0) {
-      setPageNumber(1);
-    } else {
-      setPageNumber(event.selected);
-    }
-  };
+  // react-paginate is zero indexed, so we add one when we set the new page
+  const handlePaginate = (event) => setPageNumber(event.selected + 1);
 
   const renderTotalResults = () => (totalResults > 0 && (
   <div id="total-results-container">
@@ -119,7 +114,10 @@ function Search() {
   const renderPaging = () => (
     <div id="paging-container">
       <div id="paging-button-wrapper">
-        <Pagination handlePaginate={handlePaginate} totalPages={totalPages} />
+        <Pagination
+          handlePaginate={handlePaginate}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );
