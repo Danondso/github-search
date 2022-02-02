@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetails Test Suite On Error, the user details displays the error 1`] = `
+<div>
+  <div
+    class="user-details-container"
+  >
+    <div
+      class="user-details-item "
+    >
+      Error: Something awful happened upstairs
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserDetails Test Suite Renders with required props 1`] = `
+<div>
+  <div
+    class="user-details-container"
+  >
+    <div
+      class="user-details-item"
+    >
+      <div
+        class="user-details-item user-details-row"
+      >
+        Bio: Beep beep boop
+      </div>
+      <div
+        class="user-details-item user-details-row"
+      >
+        Followers: 11
+      </div>
+      <div
+        class="user-details-item user-details-row"
+      >
+        Public Repos: 41
+      </div>
+      <div
+        class="user-details-item user-details-row"
+      >
+        Star Count: 41
+      </div>
+    </div>
+  </div>
+</div>
+`;
