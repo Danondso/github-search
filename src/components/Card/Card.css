@@ -17,3 +17,9 @@
     padding-bottom: 1rem;
     font-size: 1.5rem;
 }
+
+@media screen and (max-width: 600px) {
+    .card-header {
+        font-size: 0.75rem;
+    }
+  }

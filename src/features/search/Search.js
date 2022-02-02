@@ -92,7 +92,7 @@ function Search() {
   );
 
   const renderSearchResults = () => (
-    <div id="result-layout-container">
+    <div id="search-results-container">
       <div className="gentle-flex result-layout-container">
         {searchResults.length > 0 && (searchResults.map((result) => (
           <Card key={result.login}>
