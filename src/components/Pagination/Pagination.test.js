@@ -16,7 +16,7 @@ describe('Pagination Test Suite', () => {
         totalPages={120}
       />,
     );
-    const inputElement = screen.getByText('Next');
+    const inputElement = screen.getByText('>>>');
     expect(inputElement).toMatchSnapshot();
   });
 
@@ -27,8 +27,8 @@ describe('Pagination Test Suite', () => {
         totalPages={120}
       />,
     );
-    userEvent.click(screen.getByText('Next'));
-    userEvent.click(screen.getByText('Previous'));
+    userEvent.click(screen.getByText('>>>'));
+    userEvent.click(screen.getByText('<<<'));
     expect(handlePaginateMock).toHaveBeenCalledTimes(2);
   });
 });

@@ -9,6 +9,6 @@ exports[`Pagination Test Suite Renders with required props 1`] = `
   role="button"
   tabindex="0"
 >
-  Next
+  &gt;&gt;&gt;
 </a>
 `;
