@@ -11,11 +11,16 @@ function UserDetails({ userUrl, reposUrl }) {
   const [userDetailsError, setUserDetailsError] = useState(undefined);
 
   useEffect(async () => {
+    const controller = new AbortController();
+    const headers = {
+      ...authHeaders,
+      signal: controller.signal,
+    };
     // normally I'd put the other call within a function, but since we're leveraging the second call
     // immediately I've opted to keep it here since we enrich user details with it.
     try {
-      const { data } = await axios.get(userUrl, authHeaders);
-      const userRepoResponse = await axios.get(reposUrl, authHeaders);
+      const { data } = await axios.get(userUrl, headers);
+      const userRepoResponse = await axios.get(reposUrl, headers);
       setUserDetails({
         ...data,
         // short-circuit on reduce and set to zero if we can't reduce the data
@@ -24,6 +29,10 @@ function UserDetails({ userUrl, reposUrl }) {
     } catch (error) {
       setUserDetailsError(error.message);
     }
+
+    return () => {
+      controller.abort();
+    };
   }, [userUrl, reposUrl]);
 
   const renderRow = (children) => (
